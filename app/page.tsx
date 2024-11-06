@@ -1,100 +1,108 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import React, { useState } from 'react';
+import { Settings, User, LogOut, ChevronDown, ChevronUp, Users, Trello } from 'lucide-react';
+import DataForm from './components/DataForm';
+
+export default function Dashboard() {
+  const [activeForm, setActiveForm] = useState('promotions');
+  const [isEventsOpen, setIsEventsOpen] = useState(false);
+
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            HUAWEI CRM COMPETITION{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="font-poppins flex flex-col min-h-screen">
+      
+      {/* Header */}
+      <header className="bg-white text-black py-8 px-5 flex items-center justify-between">
+        <h1 className="text-xl font-bold">CRM Huawei Developer Competition</h1>
+      </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Main Content */}
+      <div className="flex flex-1 flex-col md:flex-row max-w-full">
+        
+        {/* Sidebar */}
+        <nav className="bg-black text-white p-5 flex flex-col justify-between w-full md:w-1/4">
+          <div>
+            <div className="flex justify-between items-center mb-6 md:mb-10">
+              <h2 className="text-xl md:text-2xl font-bold">Dashboard</h2>
+              <button
+              className="flex items-center space-x-2 p-2 rounded hover:bg-gray-700">
+              <LogOut size={20} />
+            </button>
+            </div>
+            <ul className="space-y-4">
+              <li>
+                <a
+                  onClick={() => setActiveForm('')}
+                  className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                  <Users size={20} />
+                  <span className="text-lg md:text-xl xl:text-xl">Users</span>
+                </a>
+                
+              </li>
+              <li>
+                <a
+                  onClick={() => setActiveForm('')}
+                  className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                  <Trello size={20} />
+                  <span className="text-lg md:text-xl xl:text-xl">Tasks</span>
+                </a>
+                
+              </li>
+              <li>
+                <div>
+                  <button
+                    onClick={() => setIsEventsOpen(!isEventsOpen)}
+                    className = "flex items-center justify-between w-full p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                    <div className="flex items-center space-x-3">
+                      <Settings size={20} />
+                      <span className="text-lg md:text-xl xl:text-xl">Data</span>
+                    </div>
+                    {isEventsOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </button>
+                  {isEventsOpen && (
+                    <ul className="ml-6 mt-2 space-y-2">
+                      <li>
+                        <a
+                          onClick={() => setActiveForm('')}
+                          className="block p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                          Upload Data
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          onClick={() => setActiveForm('')}
+                          className="block p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                          View Data
+                        </a>
+                      </li>
+                    </ul>
+                  )}
+                </div>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="flex items-center space-x-3 p-2">
+            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-800 flex items-center justify-center">
+              <User size={20} />
+            </div>
+            <div>
+              <p className="text-sm md:text-base font-semibold"> User</p>
+              <p className="text-xs md:text-sm xl:text-xl text-gray-400">email@example.com</p>
+            </div>
+          </div>
+        </nav>
+
+        {/* Form Content */}
+        <div className="flex-1 bg-gray-200 flex flex-col justify-center items-center p-4 text-black max-w-full">
+          <DataForm/>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-white text-black py-8 text-center">
+        <p className="text-sm">2024 CRM</p>
       </footer>
     </div>
   );
