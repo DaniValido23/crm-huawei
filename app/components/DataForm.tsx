@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone'
 export default function DataForm() {
   const [eventImage, setEventImage] = useState<File | null>(null);
   const [fileType, setFileType] = useState('');
-  const [table, setTable] = useState(''); // Añadir estado para el select
+  const [table, setTable] = useState('');
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
@@ -40,8 +40,7 @@ export default function DataForm() {
     }
 
     formData.append("type", fileType);
-    formData.append("table", table); // Añadir el valor del select al FormData
-
+    formData.append("table", table);
     console.log('data:', eventImage);
     console.log('type:', fileType);
     console.log('select:', table);
@@ -115,8 +114,8 @@ export default function DataForm() {
             <select
               id="select"
               name="select"
-              value={table} // Agregar el valor del estado
-              onChange={(e) => setTable(e.target.value)} // Actualizar el estado al cambiar la selección
+              value={table} 
+              onChange={(e) => setTable(e.target.value)}
               required
               className="flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm focus-visible:outline-none"
             >
