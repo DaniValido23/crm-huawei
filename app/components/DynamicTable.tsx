@@ -1,11 +1,22 @@
 import React, { useState, ChangeEvent } from "react";
 
-interface DynamicTableProps {
-  data: Array<{ [key: string]: any }>;
+// Create a more flexible interface with an index signature
+interface DataItem {
+  id: number;
+  name: string;
+  age: number;
+  genre?: string;
+  lastname?: string;
+  ana?: string;
+  [key: string]: string | number | undefined;  // Add index signature
 }
 
-const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
-  const [tableData, setTableData] = useState(data);
+interface DataTableProps {
+  data: DataItem[];
+}
+
+const DynamicTable: React.FC<DataTableProps> = ({ data }) => {
+  const [tableData, setTableData] = useState<DataItem[]>(data);
 
   const headers = tableData.length > 0 ? Object.keys(tableData[0]) : [];
 
@@ -15,7 +26,10 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
     columnKey: string
   ) => {
     const newData = [...tableData];
-    newData[rowIndex][columnKey] = e.target.value;
+    newData[rowIndex] = {
+      ...newData[rowIndex],
+      [columnKey]: e.target.value
+    };
     setTableData(newData);
   };
 

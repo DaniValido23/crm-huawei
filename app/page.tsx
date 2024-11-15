@@ -8,7 +8,6 @@ import UserForm from './components/UserForm';
 
 export default function Dashboard() {
   const [activeForm, setActiveForm] = useState('users');
-  const [isEventsOpen, setIsEventsOpen] = useState(false);
 
   const data = [
     { id: 2, name: "example", age: 20, genre: "hola", lastname: "prueba" },
